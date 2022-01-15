@@ -415,6 +415,17 @@
       "rules": {
         "import/order": "off"
       }
+    },
+    {
+      "files": ["src/graphql/gen/**"],
+      "rules": {
+        "max-len": "off",
+        "camelcase": "off",
+        "import/newline-after-import": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+      }
     }
   ]
 }
