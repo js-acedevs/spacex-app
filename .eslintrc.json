@@ -352,6 +352,7 @@
     "unicorn/prefer-prototype-methods": "off",
     // not necessary to our codestyle
     "unicorn/prevent-abbreviations": "off",
+    "unicorn/no-empty-file": "off",
     // SonarJS rules
     //
     // all branches in a conditional structure should not have exactly the same implementation
