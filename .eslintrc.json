@@ -206,9 +206,17 @@
             "position": "after"
           },
           {
-            "pattern": "@interfaces/**",
+            "pattern": "@enums/**",
             "patternOptions": {
               "pattern": "@utils/**"
+            },
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@interfaces/**",
+            "patternOptions": {
+              "pattern": "@enums/**"
             },
             "group": "external",
             "position": "after"
