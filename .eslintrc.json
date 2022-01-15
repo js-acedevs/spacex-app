@@ -99,6 +99,12 @@
         "ignoreDestructuring": true
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+      }
+    ],
     //
     // Prettier rules
     //
@@ -135,6 +141,14 @@
             "pattern": "next",
             "group": "builtin",
             "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "patternOptions": {
+              "pattern": "next"
+            },
+            "group": "builtin",
+            "position": "after"
           },
           {
             "pattern": "@hooks/**",
@@ -232,7 +246,8 @@
         ],
         "newlines-between": "ignore",
         "alphabetize": { "order": "asc", "caseInsensitive": true },
-        "warnOnUnassignedImports": false
+        "warnOnUnassignedImports": false,
+        "pathGroupsExcludedImportTypes": ["@mui/material"]
       }
     ],
     //
