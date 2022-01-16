@@ -39,7 +39,8 @@
     "prettier",
     "import",
     "sonarjs",
-    "simple-import-sort"
+    "simple-import-sort",
+    "@emotion"
   ],
   "rules": {
     //
@@ -421,8 +422,16 @@
     // object literal syntax should be used
     "sonarjs/prefer-object-literal": "warn",
     // easy autofixable import sorting with eslint-plugin-simple-import-sort
+    //
+    // Simple sort rules
     "simple-import-sort/imports": "off",
-    "simple-import-sort/exports": "warn"
+    "simple-import-sort/exports": "warn",
+    //
+    // Emotion Rules
+    "@emotion/no-vanilla": "error",
+    "@emotion/import-from-emotion": "error",
+    "@emotion/styled-import": "error",
+    "@emotion/pkg-renaming": "error"
   },
   "overrides": [
     {
