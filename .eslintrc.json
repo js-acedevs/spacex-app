@@ -139,6 +139,11 @@
         "groups": ["builtin", "external", "internal", "sibling", "parent", "index", "object"],
         "pathGroups": [
           {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          },
+          {
             "pattern": "next",
             "group": "builtin",
             "position": "before"
@@ -248,7 +253,7 @@
         "newlines-between": "ignore",
         "alphabetize": { "order": "asc", "caseInsensitive": true },
         "warnOnUnassignedImports": false,
-        "pathGroupsExcludedImportTypes": ["@mui/material"]
+        "pathGroupsExcludedImportTypes": ["@mui/material", "react"]
       }
     ],
     //

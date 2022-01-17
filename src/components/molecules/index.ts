@@ -1,1 +1,1 @@
-// Export all molecules
+export { default as SearchField } from './SearchField/SearchField';
