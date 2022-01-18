@@ -31,7 +31,7 @@ const SearchField: FC<SearchFieldProps> = ({ ...rest }) => {
   // handlers
   const handleSetParams = useCallback(
     (search: string) =>
-      push({ search: `${queryString.stringify({ ...query, search })}` }, undefined, {
+      push({ search: `${queryString.stringify({ ...query, search, page: 1 })}` }, undefined, {
         scroll: false,
       }),
     [push, query]
