@@ -1,8 +1,27 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+// apollo
+import type { AppProps } from 'next/app';
+import { ApolloProvider } from '@apollo/client';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+// mui
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
 
-export default MyApp
+// next
+
+// graphql
+import { client } from '@graphql/client';
+
+// styles
+import { theme } from '@styles/theme';
+
+const MyApp = ({ Component, pageProps }: AppProps) => (
+  <ApolloProvider client={client}>
+    <ThemeProvider theme={theme}>
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <CssBaseline />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  </ApolloProvider>
+);
+
+export default MyApp;

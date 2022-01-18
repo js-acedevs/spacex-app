@@ -1,0 +1,3 @@
+build/*
+public/*
+src/next-env.d.ts

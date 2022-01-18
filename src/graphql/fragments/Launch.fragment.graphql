@@ -1,0 +1,7 @@
+fragment Launch on Launch {
+  ...LaunchFields
+  links {
+    flickrImages: flickr_images
+    missionPatchSmall: mission_patch_small
+  }
+}

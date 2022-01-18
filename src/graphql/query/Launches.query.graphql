@@ -1,0 +1,29 @@
+query GetAllLaunchesPast($limit: Int!, $offset: Int!, $missionName: String!) {
+  launchesPast(limit: $limit, offset: $offset, find: { mission_name: $missionName }) {
+    ...Launch
+  }
+}
+
+query GetAllLaunchesPastResult($missionName: String!) {
+  launchesPastResult(find: { mission_name: $missionName }) {
+    result {
+      totalCount
+    }
+  }
+}
+
+query GetLaunchById($launchId: ID!) {
+  launch(id: $launchId) {
+    id
+    rocket {
+      rocket {
+        ...Rocket
+      }
+    }
+    missionName: mission_name
+    links {
+      flickrImages: flickr_images
+      missionPatchSmall: mission_patch_small
+    }
+  }
+}

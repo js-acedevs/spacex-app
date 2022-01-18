@@ -1,0 +1,7 @@
+fragment LaunchFields on Launch {
+  id
+  details: details
+  missionId: mission_id
+  missionName: mission_name
+  launchSuccess: launch_success
+}
