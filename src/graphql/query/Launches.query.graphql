@@ -16,11 +16,14 @@ query GetLaunchById($launchId: ID!) {
   launch(id: $launchId) {
     id
     rocket {
-      rocket_name
-      rocket_type
       rocket {
         ...Rocket
       }
+    }
+    missionName: mission_name
+    links {
+      flickrImages: flickr_images
+      missionPatchSmall: mission_patch_small
     }
   }
 }

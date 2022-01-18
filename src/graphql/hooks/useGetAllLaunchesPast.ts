@@ -1,4 +1,4 @@
-// router
+// next
 import { useRouter } from 'next/router';
 
 // graphql
@@ -12,7 +12,7 @@ interface GetAllLaunchesPastProps {
   limit?: number;
 }
 
-const useGetAllLaunchesPast = ({ limit = 10 }: GetAllLaunchesPastProps) => {
+const useGetAllLaunchesPast = ({ limit = 20 }: GetAllLaunchesPastProps) => {
   // custom hook
   const { query } = useRouter();
 

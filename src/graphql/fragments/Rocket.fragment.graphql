@@ -1,7 +1,8 @@
 fragment Rocket on Rocket {
   name
+  active
   company
   country
   description
-  active
+  costPerLaunch: cost_per_launch
 }

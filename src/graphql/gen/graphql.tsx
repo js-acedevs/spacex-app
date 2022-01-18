@@ -1304,10 +1304,11 @@ export type LaunchFieldsFragment = {
 export type RocketFragment = {
   __typename?: 'Rocket';
   name?: string | null | undefined;
+  active?: boolean | null | undefined;
   company?: string | null | undefined;
   country?: string | null | undefined;
   description?: string | null | undefined;
-  active?: boolean | null | undefined;
+  costPerLaunch?: number | null | undefined;
 };
 
 export type GetAllLaunchesPastQueryVariables = Exact<{
@@ -1371,22 +1372,30 @@ export type GetLaunchByIdQuery = {
     | {
         __typename?: 'Launch';
         id?: string | null | undefined;
+        missionName?: string | null | undefined;
         rocket?:
           | {
               __typename?: 'LaunchRocket';
-              rocket_name?: string | null | undefined;
-              rocket_type?: string | null | undefined;
               rocket?:
                 | {
                     __typename?: 'Rocket';
                     name?: string | null | undefined;
+                    active?: boolean | null | undefined;
                     company?: string | null | undefined;
                     country?: string | null | undefined;
                     description?: string | null | undefined;
-                    active?: boolean | null | undefined;
+                    costPerLaunch?: number | null | undefined;
                   }
                 | null
                 | undefined;
+            }
+          | null
+          | undefined;
+        links?:
+          | {
+              __typename?: 'LaunchLinks';
+              flickrImages?: Array<string | null | undefined> | null | undefined;
+              missionPatchSmall?: string | null | undefined;
             }
           | null
           | undefined;
@@ -1417,10 +1426,11 @@ export const LaunchFragmentDoc = gql`
 export const RocketFragmentDoc = gql`
   fragment Rocket on Rocket {
     name
+    active
     company
     country
     description
-    active
+    costPerLaunch: cost_per_launch
   }
 `;
 export const GetAllLaunchesPastDocument = gql`
@@ -1544,11 +1554,14 @@ export const GetLaunchByIdDocument = gql`
     launch(id: $launchId) {
       id
       rocket {
-        rocket_name
-        rocket_type
         rocket {
           ...Rocket
         }
+      }
+      missionName: mission_name
+      links {
+        flickrImages: flickr_images
+        missionPatchSmall: mission_patch_small
       }
     }
   }

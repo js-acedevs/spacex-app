@@ -13,6 +13,7 @@ const BoxStyled = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'row',
+  margin: '10px auto',
 });
 
 const Footer = () => (

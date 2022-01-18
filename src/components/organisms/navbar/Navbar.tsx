@@ -11,7 +11,7 @@ const Navbar: FC<AppBarProps> = ({ ...rest }): ReactElement => (
   <AppBar position="static" {...rest}>
     <Container maxWidth="xl">
       <Toolbar disableGutters>
-        <CustomLink href="/">Logo</CustomLink>
+        <CustomLink href="/">Pabau</CustomLink>
       </Toolbar>
     </Container>
   </AppBar>
