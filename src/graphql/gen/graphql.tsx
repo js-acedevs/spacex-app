@@ -1275,16 +1275,66 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type GetMissionsQueryVariables = Exact<{ [key: string]: never }>;
+export type LaunchFragment = {
+  __typename?: 'Launch';
+  id?: string | null | undefined;
+  details?: string | null | undefined;
+  missionId?: Array<string | null | undefined> | null | undefined;
+  missionName?: string | null | undefined;
+  launchSuccess?: boolean | null | undefined;
+  links?:
+    | {
+        __typename?: 'LaunchLinks';
+        flickrImages?: Array<string | null | undefined> | null | undefined;
+        missionPatchSmall?: string | null | undefined;
+      }
+    | null
+    | undefined;
+};
 
-export type GetMissionsQuery = {
+export type LaunchFieldsFragment = {
+  __typename?: 'Launch';
+  id?: string | null | undefined;
+  details?: string | null | undefined;
+  missionId?: Array<string | null | undefined> | null | undefined;
+  missionName?: string | null | undefined;
+  launchSuccess?: boolean | null | undefined;
+};
+
+export type RocketFragment = {
+  __typename?: 'Rocket';
+  name?: string | null | undefined;
+  company?: string | null | undefined;
+  country?: string | null | undefined;
+  description?: string | null | undefined;
+  active?: boolean | null | undefined;
+};
+
+export type GetAllLaunchesPastQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+  missionName: Scalars['String'];
+}>;
+
+export type GetAllLaunchesPastQuery = {
   __typename?: 'Query';
-  missions?:
+  launchesPast?:
     | Array<
         | {
-            __typename?: 'Mission';
+            __typename?: 'Launch';
             id?: string | null | undefined;
-            name?: string | null | undefined;
+            details?: string | null | undefined;
+            missionId?: Array<string | null | undefined> | null | undefined;
+            missionName?: string | null | undefined;
+            launchSuccess?: boolean | null | undefined;
+            links?:
+              | {
+                  __typename?: 'LaunchLinks';
+                  flickrImages?: Array<string | null | undefined> | null | undefined;
+                  missionPatchSmall?: string | null | undefined;
+                }
+              | null
+              | undefined;
           }
         | null
         | undefined
@@ -1293,48 +1343,255 @@ export type GetMissionsQuery = {
     | undefined;
 };
 
-export const GetMissionsDocument = gql`
-  query getMissions {
-    missions(limit: 10) {
-      id
-      name
+export type GetAllLaunchesPastResultQueryVariables = Exact<{
+  missionName: Scalars['String'];
+}>;
+
+export type GetAllLaunchesPastResultQuery = {
+  __typename?: 'Query';
+  launchesPastResult?:
+    | {
+        __typename?: 'LaunchesPastResult';
+        result?:
+          | { __typename?: 'Result'; totalCount?: number | null | undefined }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type GetLaunchByIdQueryVariables = Exact<{
+  launchId: Scalars['ID'];
+}>;
+
+export type GetLaunchByIdQuery = {
+  __typename?: 'Query';
+  launch?:
+    | {
+        __typename?: 'Launch';
+        id?: string | null | undefined;
+        rocket?:
+          | {
+              __typename?: 'LaunchRocket';
+              rocket_name?: string | null | undefined;
+              rocket_type?: string | null | undefined;
+              rocket?:
+                | {
+                    __typename?: 'Rocket';
+                    name?: string | null | undefined;
+                    company?: string | null | undefined;
+                    country?: string | null | undefined;
+                    description?: string | null | undefined;
+                    active?: boolean | null | undefined;
+                  }
+                | null
+                | undefined;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export const LaunchFieldsFragmentDoc = gql`
+  fragment LaunchFields on Launch {
+    id
+    details: details
+    missionId: mission_id
+    missionName: mission_name
+    launchSuccess: launch_success
+  }
+`;
+export const LaunchFragmentDoc = gql`
+  fragment Launch on Launch {
+    ...LaunchFields
+    links {
+      flickrImages: flickr_images
+      missionPatchSmall: mission_patch_small
     }
   }
+  ${LaunchFieldsFragmentDoc}
+`;
+export const RocketFragmentDoc = gql`
+  fragment Rocket on Rocket {
+    name
+    company
+    country
+    description
+    active
+  }
+`;
+export const GetAllLaunchesPastDocument = gql`
+  query GetAllLaunchesPast($limit: Int!, $offset: Int!, $missionName: String!) {
+    launchesPast(limit: $limit, offset: $offset, find: { mission_name: $missionName }) {
+      ...Launch
+    }
+  }
+  ${LaunchFragmentDoc}
 `;
 
 /**
- * __useGetMissionsQuery__
+ * __useGetAllLaunchesPastQuery__
  *
- * To run a query within a React component, call `useGetMissionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMissionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAllLaunchesPastQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllLaunchesPastQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetMissionsQuery({
+ * const { data, loading, error } = useGetAllLaunchesPastQuery({
  *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      missionName: // value for 'missionName'
  *   },
  * });
  */
-export function useGetMissionsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetMissionsQuery, GetMissionsQueryVariables>
+export function useGetAllLaunchesPastQuery(
+  baseOptions: Apollo.QueryHookOptions<GetAllLaunchesPastQuery, GetAllLaunchesPastQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetMissionsQuery, GetMissionsQueryVariables>(GetMissionsDocument, options);
-}
-export function useGetMissionsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetMissionsQuery, GetMissionsQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetMissionsQuery, GetMissionsQueryVariables>(
-    GetMissionsDocument,
+  return Apollo.useQuery<GetAllLaunchesPastQuery, GetAllLaunchesPastQueryVariables>(
+    GetAllLaunchesPastDocument,
     options
   );
 }
-export type GetMissionsQueryHookResult = ReturnType<typeof useGetMissionsQuery>;
-export type GetMissionsLazyQueryHookResult = ReturnType<typeof useGetMissionsLazyQuery>;
-export type GetMissionsQueryResult = Apollo.QueryResult<
-  GetMissionsQuery,
-  GetMissionsQueryVariables
+export function useGetAllLaunchesPastLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllLaunchesPastQuery,
+    GetAllLaunchesPastQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllLaunchesPastQuery, GetAllLaunchesPastQueryVariables>(
+    GetAllLaunchesPastDocument,
+    options
+  );
+}
+export type GetAllLaunchesPastQueryHookResult = ReturnType<typeof useGetAllLaunchesPastQuery>;
+export type GetAllLaunchesPastLazyQueryHookResult = ReturnType<
+  typeof useGetAllLaunchesPastLazyQuery
+>;
+export type GetAllLaunchesPastQueryResult = Apollo.QueryResult<
+  GetAllLaunchesPastQuery,
+  GetAllLaunchesPastQueryVariables
+>;
+export const GetAllLaunchesPastResultDocument = gql`
+  query GetAllLaunchesPastResult($missionName: String!) {
+    launchesPastResult(find: { mission_name: $missionName }) {
+      result {
+        totalCount
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetAllLaunchesPastResultQuery__
+ *
+ * To run a query within a React component, call `useGetAllLaunchesPastResultQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllLaunchesPastResultQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllLaunchesPastResultQuery({
+ *   variables: {
+ *      missionName: // value for 'missionName'
+ *   },
+ * });
+ */
+export function useGetAllLaunchesPastResultQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetAllLaunchesPastResultQuery,
+    GetAllLaunchesPastResultQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllLaunchesPastResultQuery, GetAllLaunchesPastResultQueryVariables>(
+    GetAllLaunchesPastResultDocument,
+    options
+  );
+}
+export function useGetAllLaunchesPastResultLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllLaunchesPastResultQuery,
+    GetAllLaunchesPastResultQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllLaunchesPastResultQuery, GetAllLaunchesPastResultQueryVariables>(
+    GetAllLaunchesPastResultDocument,
+    options
+  );
+}
+export type GetAllLaunchesPastResultQueryHookResult = ReturnType<
+  typeof useGetAllLaunchesPastResultQuery
+>;
+export type GetAllLaunchesPastResultLazyQueryHookResult = ReturnType<
+  typeof useGetAllLaunchesPastResultLazyQuery
+>;
+export type GetAllLaunchesPastResultQueryResult = Apollo.QueryResult<
+  GetAllLaunchesPastResultQuery,
+  GetAllLaunchesPastResultQueryVariables
+>;
+export const GetLaunchByIdDocument = gql`
+  query GetLaunchById($launchId: ID!) {
+    launch(id: $launchId) {
+      id
+      rocket {
+        rocket_name
+        rocket_type
+        rocket {
+          ...Rocket
+        }
+      }
+    }
+  }
+  ${RocketFragmentDoc}
+`;
+
+/**
+ * __useGetLaunchByIdQuery__
+ *
+ * To run a query within a React component, call `useGetLaunchByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLaunchByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLaunchByIdQuery({
+ *   variables: {
+ *      launchId: // value for 'launchId'
+ *   },
+ * });
+ */
+export function useGetLaunchByIdQuery(
+  baseOptions: Apollo.QueryHookOptions<GetLaunchByIdQuery, GetLaunchByIdQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetLaunchByIdQuery, GetLaunchByIdQueryVariables>(
+    GetLaunchByIdDocument,
+    options
+  );
+}
+export function useGetLaunchByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetLaunchByIdQuery, GetLaunchByIdQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetLaunchByIdQuery, GetLaunchByIdQueryVariables>(
+    GetLaunchByIdDocument,
+    options
+  );
+}
+export type GetLaunchByIdQueryHookResult = ReturnType<typeof useGetLaunchByIdQuery>;
+export type GetLaunchByIdLazyQueryHookResult = ReturnType<typeof useGetLaunchByIdLazyQuery>;
+export type GetLaunchByIdQueryResult = Apollo.QueryResult<
+  GetLaunchByIdQuery,
+  GetLaunchByIdQueryVariables
 >;

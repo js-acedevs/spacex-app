@@ -1,5 +1,5 @@
 // react
-import { FC, KeyboardEvent, useEffect } from 'react';
+import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
 
 // next
 import { useRouter } from 'next/router';
@@ -11,9 +11,6 @@ import { Paper, InputBase, IconButton } from '@mui/material';
 // query string
 import queryString from 'query-string';
 
-// hooks
-import { useInput } from '@hooks/useInput';
-
 // atoms
 import { If } from '@atoms/index';
 
@@ -24,32 +21,44 @@ import { SearchFieldProps } from './SearchField.props';
 import { paperStyle } from './SearchField.styled';
 
 const SearchField: FC<SearchFieldProps> = ({ ...rest }) => {
+  // local state
+  const [value, setValue] = useState<string>('');
+  const [typing, setTyping] = useState<boolean>(false);
+
   // hooks
   const { push, query } = useRouter();
-  const { value, typing, handleOnChange, handleSetValue, handleSetTyping } = useInput();
 
   // handlers
-  const handleSetParams = (search: string) =>
-    push({ search: `${queryString.stringify({ ...query, search })}` }, undefined, {
-      scroll: false,
-    });
+  const handleSetParams = useCallback(
+    (search: string) =>
+      push({ search: `${queryString.stringify({ ...query, search })}` }, undefined, {
+        scroll: false,
+      }),
+    [push, query]
+  );
 
   const handleKeyEnter = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter') handleSetParams(value);
-    typing && handleSetTyping(!typing);
+    typing && setTyping(!typing);
   };
 
   const handleClearSearch = () => {
     handleSetParams('');
-    handleSetValue('');
+    setValue('');
+  };
+
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value.trim());
+    !typing && setTyping(!typing);
+    if (event.target?.value === '') handleClearSearch();
   };
 
   // effect
   useEffect(() => {
     if (query?.search && !typing) {
-      handleSetValue(query?.search.toString().trim());
+      setValue(query?.search.toString().trim());
     }
-  }, [typing, query?.search, handleSetValue]);
+  }, [typing, query]);
 
   return (
     <Paper sx={paperStyle} {...rest}>

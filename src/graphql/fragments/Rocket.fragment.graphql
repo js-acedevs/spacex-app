@@ -1,0 +1,7 @@
+fragment Rocket on Rocket {
+  name
+  company
+  country
+  description
+  active
+}
