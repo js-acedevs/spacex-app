@@ -2,20 +2,18 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Pabau App is a task given by Gazmend
-
 ## Setup
 
 First, clone the repository into your local machine:
 
 ```sh
-git clone https://github.com/js-acedevs/pabau-app.git
+git clone https://github.com/js-acedevs/spacex-app.git
 ```
 
 or using SSH
 
 ```sh
-git clone git@github.com:js-acedevs/pabau-app.git
+git clone git@github.com:js-acedevs/spacex-app.git
 ```
 
 After you have a clone of your project into your local machine you are ready to test the project, but first:
@@ -23,7 +21,7 @@ After you have a clone of your project into your local machine you are ready to 
 cd into the folder
 
 ```sh
-cd pabau-app
+cd spacex-app
 ```
 
 Install dependencies via npm or yarn
