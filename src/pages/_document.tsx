@@ -37,7 +37,7 @@ export default class AppDocument extends Document {
           />
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         </Head>
-        <body>
+        <body style={{ overflow: 'auto' }}>
           <Main />
           <NextScript />
         </body>

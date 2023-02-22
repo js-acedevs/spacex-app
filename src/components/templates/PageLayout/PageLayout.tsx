@@ -24,6 +24,7 @@ const BoxStyled = styled(Box)({
   justifyContent: 'space-between',
   alignItems: 'center',
   flexDirection: 'column',
+  overflow: 'scroll',
 });
 
 const PageLayout: FC<PageLayoutProps> = ({ url, title, image, children, description }) => (

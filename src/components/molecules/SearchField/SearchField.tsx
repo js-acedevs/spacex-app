@@ -1,5 +1,5 @@
 // react
-import { ChangeEvent, FC, KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 
 // next
 import { useRouter } from 'next/router';
@@ -23,7 +23,6 @@ import { paperStyle } from './SearchField.styled';
 const SearchField: FC<SearchFieldProps> = ({ ...rest }) => {
   // local state
   const [value, setValue] = useState<string>('');
-  const [typing, setTyping] = useState<boolean>(false);
 
   // hooks
   const { push, query } = useRouter();
@@ -37,28 +36,25 @@ const SearchField: FC<SearchFieldProps> = ({ ...rest }) => {
     [push, query]
   );
 
-  const handleKeyEnter = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.code === 'Enter') handleSetParams(value);
-    typing && setTyping(!typing);
-  };
-
   const handleClearSearch = () => {
     handleSetParams('');
     setValue('');
   };
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value.trim());
-    !typing && setTyping(!typing);
-    if (event.target?.value === '') handleClearSearch();
+    if (event.target?.value === '') {
+      handleClearSearch();
+    } else {
+      setValue(event.target.value.trim());
+      handleSetParams(event.target.value.trim());
+    }
   };
 
-  // effect
   useEffect(() => {
-    if (query?.search && !typing) {
-      setValue(query?.search.toString().trim());
+    if (query?.search && !value) {
+      setValue(query?.search.toString().trim() || '');
     }
-  }, [typing, query]);
+  }, [query?.search, value]);
 
   return (
     <Paper sx={paperStyle} {...rest}>
@@ -67,7 +63,6 @@ const SearchField: FC<SearchFieldProps> = ({ ...rest }) => {
         placeholder="Search..."
         sx={{ ml: 1, flex: 1 }}
         onChange={handleOnChange}
-        onKeyPress={handleKeyEnter}
         inputProps={{ 'aria-label': 'search launches' }}
       />
 

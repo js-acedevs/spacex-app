@@ -19,26 +19,38 @@ const LaunchesPast = (): ReactElement => {
 
   return (
     <>
-      <If condition={!!result?.length}>
-        <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginY: 8 }}>
-          {result?.map((launch) => (
-            <Grid item sm={6} key={launch?.id}>
-              <LaunchCard
-                id={launch?.id || ''}
-                src={launch?.links?.missionPatchSmall || ''}
-                details={launch?.details || ''}
-                title={launch?.missionName || ' '}
-                status
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </If>
-      <If condition={!!result?.length && !!total}>
-        <Pagination count={total} />
+      <If condition={loading}>
+        <Stack
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+          sx={{ mt: 20 }}
+        >
+          <Typography variant="h4" gutterBottom>
+            Loading...
+          </Typography>
+        </Stack>
       </If>
 
-      <If condition={!result?.length && !loading}>
+      {!!result?.length && !loading ? (
+        <>
+          <Grid container spacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginY: 8 }}>
+            {result?.map((launch) => (
+              <Grid item sm={6} key={launch?.id}>
+                <LaunchCard
+                  id={launch?.id || ''}
+                  src={launch?.links?.missionPatchSmall || ''}
+                  details={launch?.details || ''}
+                  title={launch?.missionName || ' '}
+                  status
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Pagination count={total} />
+        </>
+      ) : (
         <Stack
           direction="column"
           justifyContent="center"
@@ -50,7 +62,7 @@ const LaunchesPast = (): ReactElement => {
             Not found LaunchesPast
           </Typography>
         </Stack>
-      </If>
+      )}
     </>
   );
 };
