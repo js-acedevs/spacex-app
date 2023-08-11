@@ -29,7 +29,7 @@ const BoxStyled = styled(Box)({
 const BaseLayout: FC<BaseLayoutProps> = ({ title, children }) => (
   <>
     <Head>
-      <title>Pabau - {title}</title>
+      <title>{title}</title>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
     </Head>
     <BoxStyled>
