@@ -1,6 +1,6 @@
 {
-  "name": "Pabau App",
-  "short_name": "Pabau",
+  "name": "SpaceX GraphQL API",
+  "short_name": "SGA",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
